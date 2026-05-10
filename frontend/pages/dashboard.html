@@ -305,113 +305,86 @@
   // Call update stats function
   updateDashboardStats();
   
-  // Load personalized recommendations based on user preferences
-  function loadPersonalizedRecommendations() {
-    const userPreferences = JSON.parse(localStorage.getItem("userPreferences")) || {};
-    const recommendedDestinations = document.getElementById("recommendedDestinations");
-    const recommendationsTitle = document.getElementById("recommendationsTitle");
-    
-    // Default destinations if no preferences
-    if (!userPreferences.destinations || userPreferences.destinations.length === 0) {
-      recommendationsTitle.textContent = "Recommended Destinations";
-      recommendedDestinations.innerHTML = `
-        <div class="col-md-3">
-          <div class="destination-card" onclick="openDestination('Kerala')" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1200&auto=format&fit=crop" alt="Kerala">
-            <h5>Kerala</h5>
-            <p class="text-muted mb-0">Backwaters & nature</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="destination-card" onclick="openDestination('Bali')" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="Bali">
-            <h5>Bali</h5>
-            <p class="text-muted mb-0">Beaches & temples</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="destination-card" onclick="openDestination('Thailand')" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop" alt="Thailand">
-            <h5>Thailand</h5>
-            <p class="text-muted mb-0">Food & islands</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="destination-card" onclick="openDestination('Indonesia')" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop" alt="Indonesia">
-            <h5>Indonesia</h5>
-            <p class="text-muted mb-0">Adventure travel</p>
-          </div>
-        </div>
-      `;
-      return;
-    }
+  const defaultDestinations = [
+  {
+    name: "Kerala",
+    desc: "Backwaters, nature and peaceful stays",
+    budget: "Starting ₹8,000",
+    img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Bali",
+    desc: "Beaches, temples and island vibes",
+    budget: "Starting ₹35,000",
+    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Thailand",
+    desc: "Food, islands and nightlife",
+    budget: "Starting ₹30,000",
+    img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Indonesia",
+    desc: "Adventure, culture and scenic views",
+    budget: "Starting ₹32,000",
+    img: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Maldives",
+    desc: "Luxury resorts and ocean villas",
+    budget: "Starting ₹50,000",
+    img: "https://images.unsplash.com/photo-1514282401047-d61bae086dff?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Manali",
+    desc: "Mountains, snow and adventure",
+    budget: "Starting ₹10,000",
+    img: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Jaipur",
+    desc: "Palaces, forts and royal culture",
+    budget: "Starting ₹7,000",
+    img: "https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?q=80&w=1200&auto=format&fit=crop"
+  },
+  {
+    name: "Dubai",
+    desc: "Luxury shopping, skyline and desert safari",
+    budget: "Starting ₹45,000",
+    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200&auto=format&fit=crop"
+  }
+];
 
-    // Personalized recommendations based on preferences
-    const destinations = [];
-    const destinationsLiked = userPreferences.destinations || [];
-    const tripTypes = userPreferences.tripTypes || [];
-    
-    // Add destinations based on preferences
-    if (destinationsLiked.includes('Beaches')) {
-      destinations.push(
-        {name: 'Bali', desc: 'Matches your beach preference', budget: '₹25,000+', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Kerala', desc: 'Matches your beach preference', budget: '₹20,000+', image: 'https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Maldives', desc: 'Perfect for beach lovers', budget: '₹50,000+', image: 'https://images.unsplash.com/photo-1573845550063-38b7f61b2615?q=80&w=1200&auto=format&fit=crop'}
-      );
-    }
-    
-    if (destinationsLiked.includes('Mountains')) {
-      destinations.push(
-        {name: 'Manali', desc: 'Matches your mountain preference', budget: '₹15,000+', image: 'https://images.unsplash.com/photo-1464822759855-d61bae086dff?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Kashmir', desc: 'Matches your mountain preference', budget: '₹30,000+', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Switzerland', desc: 'Perfect for mountain lovers', budget: '₹80,000+', image: 'https://images.unsplash.com/photo-1529498897529-aa4918418e36?q=80&w=1200&auto=format&fit=crop'}
-      );
-    }
-    
-    if (destinationsLiked.includes('Cities') || destinationsLiked.includes('Historical Places')) {
-      destinations.push(
-        {name: 'Jaipur', desc: 'Matches your city preference', budget: '₹10,000+', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Agra', desc: 'Perfect for history lovers', budget: '₹8,000+', image: 'https://images.unsplash.com/photo-1564507593259-b898e0f99794?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Rome', desc: 'Historical city experience', budget: '₹70,000+', image: 'https://images.unsplash.com/photo-1522809342845-652b4e4ec9?q=80&w=1200&auto=format&fit=crop'}
-      );
-    }
-    
-    // Add some default destinations if we don't have enough
-    if (destinations.length < 4) {
-      destinations.push(
-        {name: 'Thailand', desc: 'Food & island paradise', budget: '₹20,000+', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop'},
-        {name: 'Indonesia', desc: 'Adventure & culture', budget: '₹25,000+', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop'}
-      );
-    }
-    
-    // Update title based on preferences
-    let titleText = "Recommended Destinations";
-    if (destinationsLiked.length > 0 && tripTypes.length > 0) {
-      const topDestination = destinationsLiked[0];
-      const topTripType = tripTypes[0];
-      titleText = `Recommended for your ${topTripType} + ${topDestination} preference`;
-    }
-    recommendationsTitle.textContent = titleText;
-    
-    // Render destination cards
-    const destinationsHtml = destinations.slice(0, 4).map(dest => `
-      <div class="col-md-3">
-        <div class="destination-card" onclick="openDestination('${dest.name}')" style="cursor:pointer;">
-          <img src="${dest.image}" alt="${dest.name}">
-          <h5>${dest.name}</h5>
-          <p class="text-muted mb-0">${dest.desc}</p>
-          <p class="text-muted mb-0"><small>Starting from ${dest.budget}</small></p>
+function renderRecommendedDestinations() {
+  const container = document.getElementById("recommendedDestinations");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  defaultDestinations.forEach(destination => {
+    container.innerHTML += `
+      <div class="col-md-3 col-sm-6">
+        <div class="destination-card" onclick="openDestination('${destination.name}')" style="cursor:pointer;">
+          <img src="${destination.img}" alt="${destination.name}" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop'">
+          <h5>${destination.name}</h5>
+          <p class="text-muted mb-1">${destination.desc}</p>
+          <span class="badge-custom">${destination.budget}</span>
         </div>
       </div>
-    `).join('');
-    
-    recommendedDestinations.innerHTML = destinationsHtml;
-  }
+    `;
+  });
+}
 
-  // Load personalized recommendations
-  loadPersonalizedRecommendations();
-  
+function openDestination(destination) {
+  localStorage.setItem("selectedDestination", destination);
+  window.location.href = "destination.html";
+}
+
+renderRecommendedDestinations();
+
+    
   if (trips.length > 0) {
     // Show trips in reverse order (newest first)
     const recentTripsHtml = trips.slice().reverse().map(trip => `
@@ -458,15 +431,6 @@
       trips = trips.filter(trip => trip.id !== tripId);
       localStorage.setItem("trips", JSON.stringify(trips));
       location.reload(); // Refresh to show updated list
-    }
-  }
-</script>
-
-<script>
-  function openDestination(destination) {
-    localStorage.setItem("selectedDestination", destination);
-    window.location.href = "destination.html";
-  }
 </script>
 </body>
 </html>
