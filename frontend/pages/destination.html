@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination Details - Traveloop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#f4f8fb;color:#071739;}
+    .hero{
+      background-size:cover;background-position:center;
+      color:white;padding:70px 40px;border-radius:0 0 35px 35px;
+      position:relative;
+    }
+    .hero::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:linear-gradient(rgba(7,23,57,.75),rgba(0,168,150,.55));
+      border-radius:0 0 35px 35px;z-index:1;
+    }
+    .hero-content{position:relative;z-index:2;}
+    .hero h1{font-size:52px;font-weight:700;margin-bottom:20px;}
+    .section-title{font-weight:700;margin:35px 0 20px;color:#071739;}
+    .img-card img{width:100%;height:220px;object-fit:cover;border-radius:22px;transition:transform 0.3s;cursor:pointer;}
+    .img-card img:hover{transform:scale(1.05);}
+    .info-card,.hotel-card{
+      background:white;border-radius:22px;padding:24px;
+      box-shadow:0 8px 25px rgba(0,0,0,.08);height:100%;transition:transform 0.3s,box-shadow 0.3s;
+    }
+    .info-card:hover,.hotel-card:hover{transform:translateY(-5px);box-shadow:0 12px 35px rgba(0,0,0,.12);}
+    .hotel-card img{width:100%;height:160px;object-fit:cover;border-radius:18px;margin-bottom:15px;}
+    .price{color:#00a896;font-weight:700;font-size:22px;}
+    .btn-main{
+      background:#00c2a8;color:white;border:none;padding:13px 30px;
+      border-radius:30px;font-weight:600;text-decoration:none;display:inline-block;
+      transition:all 0.3s;
+    }
+    .btn-main:hover{background:#009c88;color:white;transform:translateY(-2px);}
+    .btn-main:disabled{background:#ccc;cursor:not-allowed;transform:none;}
+    .badge-custom{
+      background:#e6fbf8;color:#00a896;padding:7px 12px;
+      border-radius:20px;font-weight:600;font-size:13px;margin:2px;
+    }
+    .badge-available{background:#d4edda;color:#155724;}
+    .badge-limited{background:#fff3cd;color:#856404;}
+    .badge-soldout{background:#f8d7da;color:#721c24;}
+    .activity-icon{
+      width:60px;height:60px;border-radius:50%;
+      background:linear-gradient(135deg,#071739,#00c2a8);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto;color:white;font-size:24px;
+    }
+    .hotel-rating{color:#ffc857;}
+    .hotel-amenities{font-size:12px;color:#666;}
+    .hotel-amenities i{margin-right:5px;}
+    .destination-card:hover{transform:translateY(-3px);}
+  </style>
+</head>
+
+<body>
+
+  <div class="hero" id="heroSection">
+    <div class="hero-content">
+      <h1 id="destinationName">Loading...</h1>
+      <p id="heroDescription">Explore beautiful destinations and plan your perfect trip.</p>
+      <a href="dashboard.html" class="btn btn-light mt-3">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <div class="container py-5">
+
+    <!-- Preference Matching Box -->
+    <div class="info-card mb-4" id="preferenceMatch" style="background: linear-gradient(135deg, #e6fbf8, #d4edda);">
+      <div class="d-flex align-items-center">
+        <div class="me-3">
+          <i class="fas fa-heart" style="color: #00a896; font-size: 24px;"></i>
+        </div>
+        <div>
+          <h5 class="mb-2" style="color: #071739;">Why this matches you</h5>
+          <p class="mb-0" id="preferenceText">Loading preference match...</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Destination Gallery</h2>
+    <div class="row g-4" id="imageGallery">
+      <!-- Images will be loaded dynamically -->
+    </div>
+
+    <h2 class="section-title">About Destination</h2>
+    <div class="info-card">
+      <p id="aboutDestination">Loading destination information...</p>
+      <div id="destinationTags">
+        <!-- Tags will be loaded dynamically -->
+      </div>
+    </div>
+
+    <h2 class="section-title">Best Time to Visit</h2>
+    <div class="info-card">
+      <p id="bestTimeToVisit">Loading weather information...</p>
+    </div>
+
+    <h2 class="section-title">Popular Activities</h2>
+    <div class="row g-4" id="activitiesSection">
+      <!-- Activities will be loaded dynamically -->
+    </div>
+
+    <h2 class="section-title">Nearby Attractions</h2>
+    <div class="row g-4" id="attractionsSection">
+      <!-- Attractions will be loaded dynamically -->
+    </div>
+
+    <h2 class="section-title">Travel Tips</h2>
+    <div class="info-card">
+      <ul id="travelTips">
+        <!-- Tips will be loaded dynamically -->
+      </ul>
+    </div>
+
+    <h2 class="section-title">Hotel Availability</h2>
+    <div class="row g-4" id="hotelsSection">
+      <!-- Hotels will be loaded dynamically -->
+    </div>
+
+    <div class="text-center mt-5">
+      <button class="btn-main btn-lg" onclick="planTrip({name: 'Custom Hotel', price: 0, rating: 0, location: 'Any', availability: 'Available'})">
+        Plan Trip to this Destination
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const destinationData = {
+      Bali: {
+        heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop',
+        about: "Bali is a tropical paradise known for its forested volcanic mountains, iconic rice paddies, beaches and coral reefs. The island is home to religious sites such as cliffside Uluwatu Temple. To the south, the beachside city of Kuta has lively bars, while Seminyak, Sanur and Nusa Dua are known for luxury resorts and yoga retreats.",
+        images: [
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1516439399269-13c1b694115a?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1540202404-1b9276c493c5?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop'
+        ],
+        tags: ['Beaches', 'Temples', 'Culture', 'Adventure', 'Wellness'],
+        bestTime: 'April to October (Dry season) - Perfect for beach activities and sightseeing',
+        activities: [
+          {icon: 'fa-umbrella-beach', name: 'Beach Activities', desc: 'Swimming, surfing, sunbathing at Kuta and Seminyak beaches', cost: 1500, duration: '4 hours', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-vihara', name: 'Temple Tours', desc: 'Visit Uluwatu, Tanah Lot, and Besakih temples', cost: 2000, duration: '6 hours', image: 'https://images.unsplash.com/photo-1547981609-4b6bf67b9a1c?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-hiking', name: 'Adventure Sports', desc: 'Trekking Mount Batur, white water rafting, cycling tours', cost: 3500, duration: '8 hours', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-spa', name: 'Wellness & Spa', desc: 'Traditional Balinese massage, yoga retreats, meditation', cost: 2500, duration: '3 hours', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop'}
+        ],
+        attractions: [
+          {name: 'Uluwatu Temple', desc: 'Cliffside temple with stunning sunset views', distance: '45 mins from Denpasar', image: 'https://images.unsplash.com/photo-1547981609-4b6bf67b9a1c?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Tegallalang Rice Terraces', desc: 'Iconic rice paddies with traditional irrigation', distance: '30 mins from Ubud', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Sacred Monkey Forest', desc: 'Nature reserve with hundreds of monkeys', distance: '15 mins from Ubud', image: 'https://images.unsplash.com/photo-1516439399269-13c1b694115a?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Mount Batur', desc: 'Active volcano with sunrise trekking tours', distance: '2 hours from Denpasar', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop'}
+        ],
+        tips: [
+          'Rent a scooter for easy transportation around the island',
+          'Bargain at local markets, but be respectful',
+          'Respect temple dress codes - cover shoulders and knees',
+          'Try local dishes like Nasi Goreng and Satay',
+          'Bring sunscreen and stay hydrated'
+        ],
+        hotels: [
+          {
+            name: 'Budget Stay',
+            image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+            rating: 3.5,
+            location: 'Kuta Area',
+            price: 1200,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'AC']
+          },
+          {
+            name: 'Standard Hotel',
+            image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.2,
+            location: 'Seminyak Beach',
+            price: 3000,
+            availability: 'Few Rooms Left',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Beach Access']
+          },
+          {
+            name: 'Luxury Resort',
+            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.8,
+            location: 'Nusa Dua',
+            price: 8000,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Spa', 'Beach View', 'Butler Service']
+          },
+          {
+            name: 'Boutique Villa',
+            image: 'https://images.unsplash.com/photo-1582719508461-905803d0061c?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.6,
+            location: 'Ubud',
+            price: 5500,
+            availability: 'Sold Out',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Private Villa', 'Garden View']
+          }
+        ]
+      },
+      Kerala: {
+        heroImage: 'https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1600&auto=format&fit=crop',
+        about: "Kerala, known as 'God's Own Country', is a tropical paradise in southern India. Famous for its palm-lined beaches, backwaters, network of canals, and spice plantations. The Western Ghats mountain range creates diverse landscapes from hill stations to wildlife sanctuaries.",
+        images: [
+          'https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1596445854293-8b8b4e5a9f2b?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1602216056076-2ccbf65df6c2?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1589476131400-dc3b1c1c03e4?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=1200&auto=format&fit=crop'
+        ],
+        tags: ['Backwaters', 'Nature', 'Ayurveda', 'Spices', 'Beaches'],
+        bestTime: 'September to March - Pleasant weather for sightseeing and backwater cruises',
+        activities: [
+          {icon: 'fa-ship', name: 'Houseboat Cruise', desc: 'Overnight stay in traditional Kerala houseboats on backwaters', cost: 3000, duration: '24 hours', image: 'https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-leaf', name: 'Ayurveda Therapy', desc: 'Traditional Ayurvedic massages and wellness treatments', cost: 2000, duration: '2 hours', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-tree', name: 'Tea Plantation Tour', desc: 'Visit Munnar tea gardens and learn about tea processing', cost: 1500, duration: '4 hours', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-fish', name: 'Beach Activities', desc: 'Relax at Kovalam Beach and enjoy water sports', cost: 1000, duration: '3 hours', image: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=600&auto=format&fit=crop'}
+        ],
+        attractions: [
+          {name: 'Alleppey Backwaters', desc: 'Network of canals and lagoons with houseboat cruises', distance: '1.5 hours from Kochi', image: 'https://images.unsplash.com/photo-1602216056076-2ccbf65df6c2?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Munnar Hill Station', desc: 'Tea plantations and misty mountain landscapes', distance: '4 hours from Kochi', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Fort Kochi', desc: 'Historic area with Dutch and Portuguese architecture', distance: '30 mins from Ernakulam', image: 'https://images.unsplash.com/photo-1589476131400-dc3b1c1c03e4?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Periyar Wildlife Sanctuary', desc: 'Tiger reserve with boat safaris and wildlife viewing', distance: '5 hours from Kochi', image: 'https://images.unsplash.com/photo-1540202404-1b9276c493c5?q=80&w=600&auto=format&fit=crop'}
+        ],
+        tips: [
+          'Try authentic Kerala cuisine like Appam and Stew',
+          'Book houseboats in advance during peak season',
+          'Carry light cotton clothes and rain gear',
+          'Respect local customs and dress modestly at religious sites',
+          'Don\'t miss the Kathakali dance performances'
+        ],
+        hotels: [
+          {
+            name: 'Budget Homestay',
+            image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+            rating: 3.8,
+            location: 'Alleppey',
+            price: 1500,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Homemade Food', 'AC']
+          },
+          {
+            name: 'Backwater Resort',
+            image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.3,
+            location: 'Kumarakom',
+            price: 4500,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Backwater View']
+          },
+          {
+            name: 'Luxury Houseboat',
+            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.7,
+            location: 'Alleppey Backwaters',
+            price: 9000,
+            availability: 'Few Rooms Left',
+            amenities: ['All Meals', 'AC', 'Private Deck', 'Crew Service', 'Fishing Equipment']
+          }
+        ]
+      },
+      Thailand: {
+        heroImage: 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1600&auto=format&fit=crop',
+        about: "Thailand is a Southeast Asian kingdom known for tropical beaches, opulent royal palaces, ancient ruins, and ornate temples. From bustling Bangkok with its vibrant street life to the serene islands of Phuket and Koh Samui, Thailand offers diverse experiences for every traveler.",
+        images: [
+          'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1530789253388-582c401c54a0?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1503808644372-85ceb39cc48e?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1518548359916-9ae6421b9dea?q=80&w=1200&auto=format&fit=crop'
+        ],
+        tags: ['Islands', 'Street Food', 'Temples', 'Nightlife', 'Shopping'],
+        bestTime: 'November to April - Cool and dry season, perfect for island hopping',
+        activities: [
+          {icon: 'fa-utensils', name: 'Street Food Tour', desc: 'Try Pad Thai, Tom Yum, and Mango Sticky Rice', cost: 1200, duration: '3 hours', image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-umbrella-beach', name: 'Island Hopping', desc: 'Visit Phi Phi, James Bond, and Similan Islands', cost: 4500, duration: 'Full day', image: 'https://images.unsplash.com/photo-1530789253388-582c401c54a0?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-monument', name: 'Temple Visits', desc: 'Explore Wat Pho, Wat Arun, and Grand Palace', cost: 800, duration: '4 hours', image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-shopping-bag', name: 'Shopping', desc: 'Chatuchak Market and luxury malls in Bangkok', cost: 2000, duration: '5 hours', image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=600&auto=format&fit=crop'}
+        ],
+        attractions: [
+          {name: 'Phi Phi Islands', desc: 'Stunning limestone cliffs and crystal-clear waters', distance: '2 hours by boat from Phuket', image: 'https://images.unsplash.com/photo-1530789253388-582c401c54a0?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Grand Palace Bangkok', desc: 'Opulent royal palace with sacred Buddha temple', distance: '30 mins from city center', image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Ayutthaya Historical Park', desc: 'Ancient capital with temple ruins', distance: '1.5 hours from Bangkok', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Railay Beach', desc: 'Accessible only by boat, famous for rock climbing', distance: '3 hours from Krabi', image: 'https://images.unsplash.com/photo-1518548359916-9ae6421b9dea?q=80&w=600&auto=format&fit=crop'}
+        ],
+        tips: [
+          'Learn basic Thai phrases - locals appreciate the effort',
+          'Always respect the Royal Family',
+          'Bargain respectfully at markets and street vendors',
+          'Try street food from busy stalls (high turnover = fresh)',
+          'Dress modestly when visiting temples'
+        ],
+        hotels: [
+          {
+            name: 'Budget Guesthouse',
+            image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+            rating: 3.6,
+            location: 'Khao San Road, Bangkok',
+            price: 1000,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'AC', 'Lockers']
+          },
+          {
+            name: 'Beach Resort',
+            image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.4,
+            location: 'Patong Beach, Phuket',
+            price: 4000,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Beach Access', 'Bar']
+          },
+          {
+            name: 'Luxury Hotel',
+            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.9,
+            location: 'Sukhumvit, Bangkok',
+            price: 7500,
+            availability: 'Few Rooms Left',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Spa', 'Gym', 'Sky Bar']
+          }
+        ]
+      },
+      Indonesia: {
+        heroImage: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop',
+        about: "Indonesia is the world's largest archipelago nation with over 17,000 islands. From the temples of Borobudur to the beaches of Bali, the jungles of Borneo to the vibrant culture of Yogyakarta, Indonesia offers incredible diversity in landscapes, cultures, and experiences.",
+        images: [
+          'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1540202404-1b9276c493c5?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1518548359916-9ae6421b9dea?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1200&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=1200&auto=format&fit=crop'
+        ],
+        tags: ['Adventure', 'Culture', 'Islands', 'Wildlife', 'Diving'],
+        bestTime: 'May to September - Dry season for most regions, ideal for outdoor activities',
+        activities: [
+          {icon: 'fa-fish', name: 'Scuba Diving', desc: 'Explore coral reefs in Komodo and Raja Ampat', cost: 5000, duration: 'Full day', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-mountain', name: 'Volcano Trekking', desc: 'Climb Mount Bromo and Mount Rinjani', cost: 3500, duration: '2 days', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-landmark', name: 'Temple Exploration', desc: 'Visit Borobudur and Prambanan temples', cost: 1500, duration: '6 hours', image: 'https://images.unsplash.com/photo-1540202404-1b9276c493c5?q=80&w=600&auto=format&fit=crop'},
+          {icon: 'fa-tree', name: 'Wildlife Safari', desc: 'See orangutans in Borneo and Komodo dragons', cost: 4000, duration: 'Full day', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop'}
+        ],
+        attractions: [
+          {name: 'Borobudur Temple', desc: 'World\'s largest Buddhist temple with stunning sunrise views', distance: '1 hour from Yogyakarta', image: 'https://images.unsplash.com/photo-1540202404-1b9276c493c5?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Komodo National Park', desc: 'Home to Komodo dragons and world-class diving', distance: '4 hours by boat from Labuan Bajo', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Raja Ampat Islands', desc: 'Pristine marine biodiversity paradise', distance: '6 hours by boat from Sorong', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=600&auto=format&fit=crop'},
+          {name: 'Mount Bromo', desc: 'Active volcano with otherworldly landscape', distance: '3 hours from Surabaya', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop'}
+        ],
+        tips: [
+          'Indonesia is Muslim-majority - dress modestly in religious areas',
+          'Bargaining is expected in markets and small shops',
+          'Try local dishes like Nasi Padang and Satay',
+          'Be cautious with street food - choose busy stalls',
+          'Learn basic Bahasa Indonesia phrases'
+        ],
+        hotels: [
+          {
+            name: 'Budget Hostel',
+            image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+            rating: 3.7,
+            location: 'Yogyakarta',
+            price: 800,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'AC', 'Dormitory']
+          },
+          {
+            name: 'Jungle Lodge',
+            image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.2,
+            location: 'Ubud, Bali',
+            price: 3500,
+            availability: 'Available',
+            amenities: ['Wi-Fi', 'Breakfast', 'Pool', 'AC', 'Jungle View', 'Yoga Classes']
+          },
+          {
+            name: 'Island Resort',
+            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop',
+            rating: 4.8,
+            location: 'Gili Islands',
+            price: 6000,
+            availability: 'Sold Out',
+            amenities: ['Wi-Fi', 'All Meals', 'Pool', 'AC', 'Beach Bungalows', 'Diving Center']
+          }
+        ]
+      }
+    };
+
+    const destination = localStorage.getItem("selectedDestination") || "Bali";
+    const data = destinationData[destination];
+
+    // Load preference matching
+    function loadPreferenceMatching() {
+      const userPreferences = JSON.parse(localStorage.getItem("userPreferences")) || {};
+      const preferenceText = document.getElementById("preferenceText");
+      
+      if (!userPreferences.destinations || !userPreferences.tripTypes) {
+        preferenceText.textContent = "Discover this beautiful destination with its unique experiences";
+        return;
+      }
+      
+      const destinationsLiked = userPreferences.destinations || [];
+      const tripTypes = userPreferences.tripTypes || [];
+      
+      let matchReasons = [];
+      
+      // Check destination matches
+      if (destination === 'Bali') {
+        if (destinationsLiked.includes('Beaches')) matchReasons.push('beaches');
+        if (destinationsLiked.includes('Islands')) matchReasons.push('islands');
+        if (tripTypes.includes('Cultural')) matchReasons.push('cultural temples');
+        if (tripTypes.includes('Adventure')) matchReasons.push('adventure activities');
+      } else if (destination === 'Kerala') {
+        if (destinationsLiked.includes('Beaches')) matchReasons.push('beaches');
+        if (destinationsLiked.includes('Nature')) matchReasons.push('nature');
+        if (tripTypes.includes('Relaxing')) matchReasons.push('relaxing backwaters');
+      } else if (destination === 'Thailand') {
+        if (destinationsLiked.includes('Islands')) matchReasons.push('islands');
+        if (destinationsLiked.includes('Cities')) matchReasons.push('vibrant cities');
+        if (tripTypes.includes('Adventure')) matchReasons.push('adventure sports');
+      } else if (destination === 'Indonesia') {
+        if (destinationsLiked.includes('Islands')) matchReasons.push('islands');
+        if (tripTypes.includes('Adventure')) matchReasons.push('adventure travel');
+        if (tripTypes.includes('Cultural')) matchReasons.push('cultural experiences');
+      }
+      
+      // Generate preference text
+      if (matchReasons.length > 0) {
+        const reasonsText = matchReasons.slice(0, 3).join(', ');
+        const moreText = matchReasons.length > 3 ? ' and more' : '';
+        preferenceText.textContent = `Matches your interest in ${reasonsText}${moreText}`;
+      } else {
+        preferenceText.textContent = "Discover this beautiful destination with its unique experiences";
+      }
+    }
+
+    // Call preference matching function
+    loadPreferenceMatching();
+
+    if (data) {
+      // Load hero section
+      document.getElementById('heroSection').style.backgroundImage = `url('${data.heroImage}')`;
+      document.getElementById('destinationName').textContent = destination;
+      document.getElementById('heroDescription').textContent = `Explore the beauty of ${destination} - ${data.tags.join(', ')}`;
+
+      // Load about section
+      document.getElementById('aboutDestination').textContent = data.about;
+      const tagsHtml = data.tags.map(tag => `<span class="badge-custom">${tag}</span>`).join('');
+      document.getElementById('destinationTags').innerHTML = tagsHtml;
+
+      // Load best time to visit
+      document.getElementById('bestTimeToVisit').textContent = data.bestTime;
+
+      // Load image gallery
+      const galleryHtml = data.images.map(img => `
+        <div class="col-md-4 img-card">
+          <img src="${img}" alt="${destination} gallery">
+        </div>
+      `).join('');
+      document.getElementById('imageGallery').innerHTML = galleryHtml;
+
+      // Load activities
+      const activitiesHtml = data.activities.map(activity => `
+        <div class="col-md-3">
+          <div class="info-card">
+            <img src="${activity.image}" alt="${activity.name}" class="w-100 mb-3" style="height:150px;object-fit:cover;border-radius:12px;">
+            <h5>${activity.name}</h5>
+            <p class="text-muted small mb-2">${activity.desc}</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge-custom"><i class="fas fa-clock me-1"></i>${activity.duration}</span>
+              <span class="badge-custom"><i class="fas fa-rupee-sign me-1"></i>${activity.cost}</span>
+            </div>
+            <button class="btn-main btn-sm w-100" onclick="addActivityToTrip(${JSON.stringify(activity).replace(/"/g, '&quot;')})">
+              <i class="fas fa-plus me-1"></i>Add to Trip
+            </button>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('activitiesSection').innerHTML = activitiesHtml;
+
+      // Load attractions
+      const attractionsHtml = data.attractions.map(attraction => `
+        <div class="col-md-6">
+          <div class="info-card">
+            <img src="${attraction.image}" alt="${attraction.name}" class="w-100 mb-3" style="height:180px;object-fit:cover;border-radius:12px;">
+            <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>${attraction.name}</h5>
+            <p class="text-muted small mb-2">${attraction.desc}</p>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge-custom"><i class="fas fa-route me-1"></i>${attraction.distance}</span>
+            </div>
+            <button class="btn-main btn-sm w-100" onclick="addAttractionToItinerary(${JSON.stringify(attraction).replace(/"/g, '&quot;')})">
+              <i class="fas fa-plus me-1"></i>Add to Itinerary
+            </button>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('attractionsSection').innerHTML = attractionsHtml;
+
+      // Load travel tips
+      const tipsHtml = data.tips.map(tip => `
+        <div class="col-md-6 mb-3">
+          <div class="info-card">
+            <div class="d-flex align-items-start">
+              <div class="activity-icon me-3" style="width:40px;height:40px;font-size:18px;">
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <div>
+                <p class="mb-0">${tip}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('travelTips').innerHTML = `<div class="row">${tipsHtml}</div>`;
+
+      // Load hotels
+      const hotelsHtml = data.hotels.map(hotel => {
+        const availabilityClass = hotel.availability === 'Available' ? 'badge-available' : 
+                                hotel.availability === 'Few Rooms Left' ? 'badge-limited' : 'badge-soldout';
+        const isDisabled = hotel.availability === 'Sold Out';
+        const buttonText = isDisabled ? 'Not Available' : 'Plan with this hotel';
+        
+        return `
+          <div class="col-md-3">
+            <div class="hotel-card">
+              <img src="${hotel.image}" alt="${hotel.name}">
+              <h5>${hotel.name}</h5>
+              <div class="hotel-rating mb-2">
+                ${'★'.repeat(Math.floor(hotel.rating))}${'☆'.repeat(5-Math.floor(hotel.rating))} ${hotel.rating}
+              </div>
+              <p class="text-muted small mb-2"><i class="fas fa-map-marker-alt"></i> ${hotel.location}</p>
+              <div class="hotel-amenities mb-3">
+                ${hotel.amenities.map(amenity => `<span><i class="fas fa-check text-success"></i> ${amenity}</span>`).join(' | ')}
+              </div>
+              <p class="price mb-2">₹${hotel.price.toLocaleString()}/night</p>
+              <span class="badge-custom ${availabilityClass}">${hotel.availability}</span>
+              <br><br>
+              <button class="btn-main btn-sm" onclick="planTrip(${JSON.stringify(hotel).replace(/"/g, '&quot;')})" ${isDisabled ? 'disabled' : ''}>
+                ${buttonText}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('hotelsSection').innerHTML = hotelsHtml;
+    }
+
+    function planTrip(hotel) {
+      localStorage.setItem("selectedHotel", hotel.name);
+      localStorage.setItem("selectedHotelPrice", hotel.price);
+      localStorage.setItem("selectedHotelRating", hotel.rating);
+      localStorage.setItem("selectedHotelLocation", hotel.location);
+      localStorage.setItem("selectedDestination", destination);
+      window.location.href = "create-trip.html";
+    }
+
+    function addActivityToTrip(activity) {
+      // Get existing selected activities or create new array
+      let selectedActivities = JSON.parse(localStorage.getItem("selectedActivities")) || [];
+      
+      // Check if activity already exists
+      const exists = selectedActivities.find(a => a.name === activity.name);
+      if (!exists) {
+        selectedActivities.push({
+          activityName: activity.name,
+          category: "Activity",
+          cost: activity.cost,
+          time: "10:00",
+          date: new Date().toISOString().split('T')[0],
+          city: destination
+        });
+        
+        localStorage.setItem("selectedActivities", JSON.stringify(selectedActivities));
+        alert("Added to your trip plan: " + activity.name);
+      } else {
+        alert("This activity is already in your trip plan");
+      }
+    }
+
+    function addAttractionToItinerary(attraction) {
+      // Get existing selected attractions or create new array
+      let selectedAttractions = JSON.parse(localStorage.getItem("selectedAttractions")) || [];
+      
+      // Check if attraction already exists
+      const exists = selectedAttractions.find(a => a.name === attraction.name);
+      if (!exists) {
+        selectedAttractions.push({
+          activityName: attraction.name,
+          category: "Sightseeing",
+          cost: 0,
+          time: "09:00",
+          date: new Date().toISOString().split('T')[0],
+          city: destination
+        });
+        
+        localStorage.setItem("selectedAttractions", JSON.stringify(selectedAttractions));
+        alert("Added to your trip plan: " + attraction.name);
+      } else {
+        alert("This attraction is already in your trip plan");
+      }
+    }
+  </script>
+
+</body>
+</html>

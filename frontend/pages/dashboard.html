@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traveloop Dashboard</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#f4f8fb;
+    }
+
+    .sidebar{
+      min-height:100vh;
+      width:250px;
+      background:#071739;
+      color:white;
+      position:fixed;
+      padding:25px 20px;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:700;
+      margin-bottom:40px;
+    }
+
+    .logo span{
+      color:#00c2a8;
+    }
+
+    .menu a{
+      display:block;
+      color:white;
+      text-decoration:none;
+      padding:13px 15px;
+      border-radius:12px;
+      margin-bottom:12px;
+      transition:0.3s;
+    }
+
+    .menu a:hover,
+    .menu .active{
+      background:#00c2a8;
+    }
+
+    .main-content{
+      margin-left:250px;
+      padding:35px;
+    }
+
+    .hero-card{
+      background:
+      linear-gradient(rgba(7,23,57,0.75), rgba(0,168,150,0.55)),
+      url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      color:white;
+      padding:45px;
+      border-radius:28px;
+      margin-bottom:30px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .hero-card h1{
+      font-weight:700;
+      font-size:42px;
+    }
+
+    .hero-card p{
+      max-width:650px;
+      color:#f1f1f1;
+      margin-top:12px;
+    }
+
+    .btn-main{
+      background:#00c2a8;
+      color:white;
+      border:none;
+      padding:12px 26px;
+      border-radius:30px;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-block;
+      margin-top:12px;
+    }
+
+    .btn-main:hover{
+      background:#009c88;
+      color:white;
+    }
+
+    .stats-card,
+    .trip-card,
+    .destination-card{
+      background:white;
+      border-radius:22px;
+      padding:24px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      height:100%;
+    }
+
+    .stats-card h3{
+      color:#071739;
+      font-weight:700;
+      margin-bottom:5px;
+    }
+
+    .stats-card p{
+      color:#777;
+      margin-bottom:0;
+    }
+
+    .section-heading{
+      font-weight:700;
+      color:#071739;
+      margin:35px 0 18px;
+    }
+
+    .trip-card img,
+    .destination-card img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      border-radius:18px;
+      margin-bottom:15px;
+    }
+
+    .trip-card h5,
+    .destination-card h5{
+      color:#071739;
+      font-weight:700;
+    }
+
+    .badge-custom{
+      background:#e6fbf8;
+      color:#00a896;
+      padding:7px 12px;
+      border-radius:20px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .small-btn{
+      background:#071739;
+      color:white;
+      padding:9px 16px;
+      border-radius:20px;
+      text-decoration:none;
+      font-size:14px;
+      display:inline-block;
+      margin-top:8px;
+    }
+
+    .small-btn:hover{
+      background:#00a896;
+      color:white;
+    }
+
+    @media(max-width:768px){
+      .sidebar{
+        position:relative;
+        width:100%;
+        min-height:auto;
+      }
+
+      .main-content{
+        margin-left:0;
+        padding:20px;
+      }
+
+      .hero-card h1{
+        font-size:32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="logo">TRAVEL<span>LOOP</span></div>
+
+    <div class="menu">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="create-trip.html">Create Trip</a>
+      <a href="itinerary.html">Itinerary</a>
+      <a href="budget.html">Budget</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <div class="hero-card">
+      <h1>Welcome back, Traveler 👋</h1>
+      <p>
+        Plan your next journey with personalized itineraries, smart budgets,
+        city stops, activities, and beautiful travel timelines.
+      </p>
+      <a href="create-trip.html" class="btn-main">+ Plan New Trip</a>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="stats-card">
+          <h3>03</h3>
+          <p>Total Trips</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="stats-card">
+          <h3>09</h3>
+          <p>Cities Planned</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="stats-card">
+          <h3>₹24,500</h3>
+          <p>Estimated Budget</p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="section-heading">My Recent Trips</h3>
+
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="trip-card">
+          <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=1200&auto=format&fit=crop" alt="Goa">
+          <h5>Goa Beach Escape</h5>
+          <p class="text-muted mb-2">12 May 2026 - 16 May 2026</p>
+          <span class="badge-custom">3 Stops</span>
+          <br>
+          <a href="itinerary.html" class="small-btn">View Itinerary</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="trip-card">
+          <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop" alt="Jaipur">
+          <h5>Royal Rajasthan</h5>
+          <p class="text-muted mb-2">20 June 2026 - 25 June 2026</p>
+          <span class="badge-custom">4 Stops</span>
+          <br>
+          <a href="itinerary.html" class="small-btn">View Itinerary</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="trip-card">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Mountain">
+          <h5>Manali Adventure</h5>
+          <p class="text-muted mb-2">01 July 2026 - 06 July 2026</p>
+          <span class="badge-custom">5 Stops</span>
+          <br>
+          <a href="itinerary.html" class="small-btn">View Itinerary</a>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="section-heading" id="recommendationsTitle">Recommended Destinations</h3>
+
+    <div class="row g-4" id="recommendedDestinations">
+      <!-- Destinations will be loaded dynamically based on preferences -->
+    </div>
+
+  </div>
+<script>
+  // Load all saved trips
+  const trips = JSON.parse(localStorage.getItem("trips")) || [];
+  const recentTripsSection = document.querySelector(".row.g-4:nth-of-type(3)");
+
+  // Calculate and update dashboard stats
+  function updateDashboardStats() {
+    const totalTrips = trips.length;
+    const totalBudget = trips.reduce((sum, trip) => sum + parseInt(trip.budget || 0), 0);
+    
+    // Calculate cities planned (count unique destinations)
+    const uniqueDestinations = [...new Set(trips.map(trip => trip.destination))];
+    const citiesPlanned = uniqueDestinations.length;
+
+    // Update stats cards
+    document.querySelector('.stats-card:nth-child(1) h3').textContent = totalTrips.toString().padStart(2, '0');
+    document.querySelector('.stats-card:nth-child(2) h3').textContent = citiesPlanned.toString().padStart(2, '0');
+    document.querySelector('.stats-card:nth-child(3) h3').textContent = '₹' + totalBudget.toLocaleString();
+  }
+
+  // Call update stats function
+  updateDashboardStats();
+  
+  // Load personalized recommendations based on user preferences
+  function loadPersonalizedRecommendations() {
+    const userPreferences = JSON.parse(localStorage.getItem("userPreferences")) || {};
+    const recommendedDestinations = document.getElementById("recommendedDestinations");
+    const recommendationsTitle = document.getElementById("recommendationsTitle");
+    
+    // Default destinations if no preferences
+    if (!userPreferences.destinations || userPreferences.destinations.length === 0) {
+      recommendationsTitle.textContent = "Recommended Destinations";
+      recommendedDestinations.innerHTML = `
+        <div class="col-md-3">
+          <div class="destination-card" onclick="openDestination('Kerala')" style="cursor:pointer;">
+            <img src="https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1200&auto=format&fit=crop" alt="Kerala">
+            <h5>Kerala</h5>
+            <p class="text-muted mb-0">Backwaters & nature</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="destination-card" onclick="openDestination('Bali')" style="cursor:pointer;">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="Bali">
+            <h5>Bali</h5>
+            <p class="text-muted mb-0">Beaches & temples</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="destination-card" onclick="openDestination('Thailand')" style="cursor:pointer;">
+            <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop" alt="Thailand">
+            <h5>Thailand</h5>
+            <p class="text-muted mb-0">Food & islands</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="destination-card" onclick="openDestination('Indonesia')" style="cursor:pointer;">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop" alt="Indonesia">
+            <h5>Indonesia</h5>
+            <p class="text-muted mb-0">Adventure travel</p>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // Personalized recommendations based on preferences
+    const destinations = [];
+    const destinationsLiked = userPreferences.destinations || [];
+    const tripTypes = userPreferences.tripTypes || [];
+    
+    // Add destinations based on preferences
+    if (destinationsLiked.includes('Beaches')) {
+      destinations.push(
+        {name: 'Bali', desc: 'Matches your beach preference', budget: '₹25,000+', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Kerala', desc: 'Matches your beach preference', budget: '₹20,000+', image: 'https://images.unsplash.com/photo-1545558014-8690770de94e?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Maldives', desc: 'Perfect for beach lovers', budget: '₹50,000+', image: 'https://images.unsplash.com/photo-1573845550063-38b7f61b2615?q=80&w=1200&auto=format&fit=crop'}
+      );
+    }
+    
+    if (destinationsLiked.includes('Mountains')) {
+      destinations.push(
+        {name: 'Manali', desc: 'Matches your mountain preference', budget: '₹15,000+', image: 'https://images.unsplash.com/photo-1464822759855-d61bae086dff?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Kashmir', desc: 'Matches your mountain preference', budget: '₹30,000+', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Switzerland', desc: 'Perfect for mountain lovers', budget: '₹80,000+', image: 'https://images.unsplash.com/photo-1529498897529-aa4918418e36?q=80&w=1200&auto=format&fit=crop'}
+      );
+    }
+    
+    if (destinationsLiked.includes('Cities') || destinationsLiked.includes('Historical Places')) {
+      destinations.push(
+        {name: 'Jaipur', desc: 'Matches your city preference', budget: '₹10,000+', image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Agra', desc: 'Perfect for history lovers', budget: '₹8,000+', image: 'https://images.unsplash.com/photo-1564507593259-b898e0f99794?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Rome', desc: 'Historical city experience', budget: '₹70,000+', image: 'https://images.unsplash.com/photo-1522809342845-652b4e4ec9?q=80&w=1200&auto=format&fit=crop'}
+      );
+    }
+    
+    // Add some default destinations if we don't have enough
+    if (destinations.length < 4) {
+      destinations.push(
+        {name: 'Thailand', desc: 'Food & island paradise', budget: '₹20,000+', image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop'},
+        {name: 'Indonesia', desc: 'Adventure & culture', budget: '₹25,000+', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200&auto=format&fit=crop'}
+      );
+    }
+    
+    // Update title based on preferences
+    let titleText = "Recommended Destinations";
+    if (destinationsLiked.length > 0 && tripTypes.length > 0) {
+      const topDestination = destinationsLiked[0];
+      const topTripType = tripTypes[0];
+      titleText = `Recommended for your ${topTripType} + ${topDestination} preference`;
+    }
+    recommendationsTitle.textContent = titleText;
+    
+    // Render destination cards
+    const destinationsHtml = destinations.slice(0, 4).map(dest => `
+      <div class="col-md-3">
+        <div class="destination-card" onclick="openDestination('${dest.name}')" style="cursor:pointer;">
+          <img src="${dest.image}" alt="${dest.name}">
+          <h5>${dest.name}</h5>
+          <p class="text-muted mb-0">${dest.desc}</p>
+          <p class="text-muted mb-0"><small>Starting from ${dest.budget}</small></p>
+        </div>
+      </div>
+    `).join('');
+    
+    recommendedDestinations.innerHTML = destinationsHtml;
+  }
+
+  // Load personalized recommendations
+  loadPersonalizedRecommendations();
+  
+  if (trips.length > 0) {
+    // Show trips in reverse order (newest first)
+    const recentTripsHtml = trips.slice().reverse().map(trip => `
+      <div class="col-md-4">
+        <div class="trip-card">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop" alt="${trip.name}">
+          <h5>${trip.name}</h5>
+          <p class="text-muted mb-2">${trip.startDate} - ${trip.endDate}</p>
+          <p class="text-muted mb-2"><i class="fas fa-map-marker-alt"></i> ${trip.destination}</p>
+          ${trip.hotelName !== "Not Selected" ? `<p class="text-muted mb-2"><i class="fas fa-hotel"></i> ${trip.hotelName}</p>` : ''}
+          <span class="badge-custom">${trip.type}</span>
+          <br>
+          <p class="mt-2"><strong>Budget:</strong> ₹${trip.budget}</p>
+          <div class="mt-3">
+            <button class="small-btn me-2" onclick="viewTripDetails('${trip.id}')">View Details</button>
+            <button class="small-btn" style="background:#dc3545;" onclick="deleteTrip('${trip.id}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    
+    recentTripsSection.innerHTML = recentTripsHtml;
+  } else {
+    recentTripsSection.innerHTML = `
+      <div class="col-12">
+        <div class="text-center py-5">
+          <i class="fas fa-suitcase fa-3x text-muted mb-3"></i>
+          <h5 class="text-muted">No trips created yet</h5>
+          <p class="text-muted">Start planning your first adventure!</p>
+          <a href="create-trip.html" class="btn-main">Create Your First Trip</a>
+        </div>
+      </div>
+    `;
+  }
+
+  function viewTripDetails(tripId) {
+    localStorage.setItem("selectedTripId", tripId);
+    window.location.href = "trip-details.html";
+  }
+
+  function deleteTrip(tripId) {
+    if (confirm("Are you sure you want to delete this trip?")) {
+      let trips = JSON.parse(localStorage.getItem("trips")) || [];
+      trips = trips.filter(trip => trip.id !== tripId);
+      localStorage.setItem("trips", JSON.stringify(trips));
+      location.reload(); // Refresh to show updated list
+    }
+  }
+</script>
+
+<script>
+  function openDestination(destination) {
+    localStorage.setItem("selectedDestination", destination);
+    window.location.href = "destination.html";
+  }
+</script>
+</body>
+</html>

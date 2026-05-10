@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Trip - Traveloop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#f4f8fb;
+    }
+
+    .sidebar{
+      min-height:100vh;
+      width:250px;
+      background:#071739;
+      color:white;
+      position:fixed;
+      padding:25px 20px;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:700;
+      margin-bottom:40px;
+    }
+
+    .logo span{
+      color:#00c2a8;
+    }
+
+    .menu a{
+      display:block;
+      color:white;
+      text-decoration:none;
+      padding:13px 15px;
+      border-radius:12px;
+      margin-bottom:12px;
+      transition:0.3s;
+    }
+
+    .menu a:hover,
+    .menu .active{
+      background:#00c2a8;
+    }
+
+    .main-content{
+      margin-left:250px;
+      padding:35px;
+    }
+
+    .top-card{
+      background:
+      linear-gradient(rgba(7,23,57,0.75), rgba(0,168,150,0.55)),
+      url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1600&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      color:white;
+      padding:42px;
+      border-radius:28px;
+      margin-bottom:30px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .top-card h1{
+      font-weight:700;
+      font-size:42px;
+    }
+
+    .form-card{
+      background:white;
+      border-radius:25px;
+      padding:35px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .form-label{
+      font-weight:600;
+      color:#071739;
+    }
+
+    .form-control,
+    .form-select{
+      height:52px;
+      border-radius:12px;
+      border:1px solid #dcdcdc;
+    }
+
+    textarea.form-control{
+      height:120px;
+      resize:none;
+    }
+
+    .form-control:focus,
+    .form-select:focus{
+      box-shadow:none;
+      border-color:#00c2a8;
+    }
+
+    .btn-main{
+      background:#00c2a8;
+      color:white;
+      border:none;
+      padding:13px 30px;
+      border-radius:30px;
+      font-weight:600;
+      transition:0.3s;
+    }
+
+    .btn-main:hover{
+      background:#009c88;
+      color:white;
+    }
+
+    .btn-outline-custom{
+      border:2px solid #071739;
+      color:#071739;
+      padding:12px 28px;
+      border-radius:30px;
+      font-weight:600;
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    .btn-outline-custom:hover{
+      background:#071739;
+      color:white;
+    }
+
+    .preview-card{
+      background:white;
+      border-radius:25px;
+      padding:25px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      height:100%;
+    }
+
+    .preview-img{
+      width:100%;
+      height:210px;
+      object-fit:cover;
+      border-radius:20px;
+      margin-bottom:18px;
+    }
+
+    .badge-custom{
+      background:#e6fbf8;
+      color:#00a896;
+      padding:7px 12px;
+      border-radius:20px;
+      font-size:13px;
+      font-weight:600;
+    }
+
+    @media(max-width:768px){
+      .sidebar{
+        position:relative;
+        width:100%;
+        min-height:auto;
+      }
+
+      .main-content{
+        margin-left:0;
+        padding:20px;
+      }
+
+      .top-card h1{
+        font-size:32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <div class="logo">TRAVEL<span>LOOP</span></div>
+
+    <div class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="create-trip.html" class="active">Create Trip</a>
+      <a href="itinerary.html">Itinerary</a>
+      <a href="budget.html">Budget</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    <div class="top-card">
+      <h1>Create New Trip</h1>
+      <p class="mb-0">
+        Start your personalized journey by adding trip details, dates, destination type and description.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-lg-8">
+        <div class="form-card">
+
+          <form id="createTripForm">
+
+            <div class="mb-3">
+              <label class="form-label">Trip Name</label>
+              <input type="text" id="tripName" class="form-control" placeholder="Example: Goa Summer Escape" required>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Start Date</label>
+                <input type="date" id="startDate" class="form-control" required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">End Date</label>
+                <input type="date" id="endDate" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Trip Type</label>
+              <select id="tripType" class="form-select">
+                <option value="Adventure">Adventure</option>
+                <option value="Beach">Beach</option>
+                <option value="Family">Family</option>
+                <option value="Solo">Solo</option>
+                <option value="Budget">Budget</option>
+                <option value="Luxury">Luxury</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Estimated Budget</label>
+              <input type="number" id="tripBudget" class="form-control" placeholder="Example: 25000">
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Trip Description</label>
+              <textarea id="tripDescription" class="form-control" placeholder="Write a short description about your trip..."></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Selected Activities & Attractions</label>
+              <div id="selectedItems" class="border rounded p-3 bg-light">
+                <p class="text-muted mb-2">Activities and attractions selected from destination pages will appear here</p>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-main">
+              Save Trip
+            </button>
+
+            <a href="dashboard.html" class="btn-outline-custom ms-2">
+              Cancel
+            </a>
+
+          </form>
+
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="preview-card">
+
+          <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop"
+            class="preview-img"
+            alt="Trip Preview"
+          >
+
+          <span class="badge-custom">Live Preview</span>
+
+          <h4 class="mt-3" id="previewName">Your Trip Name</h4>
+
+          <p class="text-muted mb-2" id="previewDate">
+            Select your travel dates
+          </p>
+
+          <p class="text-muted" id="previewDesc">
+            Your trip description will appear here.
+          </p>
+
+          <hr>
+
+          <p class="mb-1">
+            <strong>Trip Type:</strong>
+            <span id="previewType">Adventure</span>
+          </p>
+
+          <p class="mb-0">
+            <strong>Budget:</strong>
+            ₹<span id="previewBudget">0</span>
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const tripName = document.getElementById("tripName");
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const tripType = document.getElementById("tripType");
+    const tripBudget = document.getElementById("tripBudget");
+    const tripDescription = document.getElementById("tripDescription");
+
+    const previewName = document.getElementById("previewName");
+    const previewDate = document.getElementById("previewDate");
+    const previewType = document.getElementById("previewType");
+    const previewBudget = document.getElementById("previewBudget");
+    const previewDesc = document.getElementById("previewDesc");
+
+    function updatePreview(){
+      previewName.textContent = tripName.value || "Your Trip Name";
+      previewType.textContent = tripType.value || "Adventure";
+      previewBudget.textContent = tripBudget.value || "0";
+      previewDesc.textContent = tripDescription.value || "Your trip description will appear here.";
+
+      if(startDate.value && endDate.value){
+        previewDate.textContent = `${startDate.value} to ${endDate.value}`;
+      } else {
+        previewDate.textContent = "Select your travel dates";
+      }
+    }
+
+    tripName.addEventListener("input", updatePreview);
+    startDate.addEventListener("input", updatePreview);
+    endDate.addEventListener("input", updatePreview);
+    tripType.addEventListener("change", updatePreview);
+    tripBudget.addEventListener("input", updatePreview);
+    tripDescription.addEventListener("input", updatePreview);
+
+    document.getElementById("createTripForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  // Get existing trips or create empty array
+  let trips = JSON.parse(localStorage.getItem("trips")) || [];
+  
+  // Get selected activities and attractions from localStorage
+  const selectedActivities = JSON.parse(localStorage.getItem("selectedActivities")) || [];
+  const selectedAttractions = JSON.parse(localStorage.getItem("selectedAttractions")) || [];
+  
+  const trip = {
+    id: Date.now().toString(),
+    name: tripName.value,
+    startDate: startDate.value,
+    endDate: endDate.value,
+    type: tripType.value,
+    budget: tripBudget.value,
+    description: tripDescription.value,
+    destination: selectedDestination || "Unknown",
+    hotelName: selectedHotel || "Not Selected",
+    hotelPrice: selectedHotelPrice || 0,
+    hotelRating: selectedHotelRating || 0,
+    hotelLocation: selectedHotelLocation || "Unknown",
+    createdAt: new Date().toISOString(),
+    activities: selectedActivities,
+    notes: [],
+    checklist: []
+  };
+
+  // Add new trip to array
+  trips.push(trip);
+  
+  // Save updated trips array
+  localStorage.setItem("trips", JSON.stringify(trips));
+  
+  // Also save as latestTrip for compatibility
+  localStorage.setItem("latestTrip", JSON.stringify(trip));
+
+  // Clear selected destination, hotel, activities, and attractions data
+  localStorage.removeItem("selectedDestination");
+  localStorage.removeItem("selectedHotel");
+  localStorage.removeItem("selectedHotelPrice");
+  localStorage.removeItem("selectedHotelRating");
+  localStorage.removeItem("selectedHotelLocation");
+  localStorage.removeItem("selectedActivities");
+  localStorage.removeItem("selectedAttractions");
+
+  alert("Trip saved successfully!");
+
+  window.location.href = "dashboard.html";
+});
+
+const selectedDestination = localStorage.getItem("selectedDestination");
+const selectedHotel = localStorage.getItem("selectedHotel");
+const selectedHotelPrice = localStorage.getItem("selectedHotelPrice");
+const selectedHotelRating = localStorage.getItem("selectedHotelRating");
+const selectedHotelLocation = localStorage.getItem("selectedHotelLocation");
+
+// Function to display selected activities and attractions
+function displaySelectedItems() {
+  const selectedActivities = JSON.parse(localStorage.getItem("selectedActivities")) || [];
+  const selectedAttractions = JSON.parse(localStorage.getItem("selectedAttractions")) || [];
+  const selectedItemsDiv = document.getElementById("selectedItems");
+  
+  if (selectedActivities.length === 0 && selectedAttractions.length === 0) {
+    selectedItemsDiv.innerHTML = '<p class="text-muted mb-2">No activities or attractions selected yet. Go to destination pages to add items to your trip.</p>';
+    return;
+  }
+  
+  let itemsHtml = '';
+  
+  // Display activities
+  if (selectedActivities.length > 0) {
+    itemsHtml += '<h6 class="mb-2"><i class="fas fa-hiking me-2"></i>Activities:</h6>';
+    selectedActivities.forEach(activity => {
+      itemsHtml += `
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-white rounded">
+          <span><strong>${activity.activityName}</strong> - ${activity.category}</span>
+          <span class="badge-custom">₹${activity.cost}</span>
+        </div>
+      `;
+    });
+  }
+  
+  // Display attractions
+  if (selectedAttractions.length > 0) {
+    itemsHtml += '<h6 class="mb-2 mt-3"><i class="fas fa-map-marker-alt me-2"></i>Attractions:</h6>';
+    selectedAttractions.forEach(attraction => {
+      itemsHtml += `
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-white rounded">
+          <span><strong>${attraction.activityName}</strong> - ${attraction.category}</span>
+          <span class="badge-custom">Free</span>
+        </div>
+      `;
+    });
+  }
+  
+  selectedItemsDiv.innerHTML = itemsHtml;
+}
+
+if (selectedDestination) {
+  tripName.value = selectedDestination + " Trip";
+  
+  let description = "Planning a beautiful trip to " + selectedDestination + ".";
+  if (selectedHotel && selectedHotel !== "Custom Hotel") {
+    description += " Staying at " + selectedHotel + " (" + selectedHotelLocation + ").";
+  }
+  tripDescription.value = description;
+
+  if (selectedHotelPrice && selectedHotelPrice !== "0") {
+    const estimatedBudget = parseInt(selectedHotelPrice) * 3;
+    tripBudget.value = estimatedBudget;
+  }
+
+  // Display selected activities and attractions
+  displaySelectedItems();
+  updatePreview();
+}
+  </script>
+
+</body>
+</html>

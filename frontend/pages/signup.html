@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveloop Signup</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+
+            background:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+            url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop');
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            padding:30px;
+        }
+
+        .signup-container{
+
+            width:100%;
+            max-width:500px;
+
+            background:white;
+
+            padding:45px;
+
+            border-radius:25px;
+
+            box-shadow:0 10px 35px rgba(0,0,0,0.2);
+        }
+
+        .logo{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .logo h1{
+            font-size:38px;
+            font-weight:700;
+            color:#071739;
+        }
+
+        .logo span{
+            color:#00c2a8;
+        }
+
+        .logo p{
+            color:#666;
+            margin-top:8px;
+        }
+
+        .form-control{
+            height:55px;
+            border-radius:12px;
+            margin-bottom:18px;
+            border:1px solid #dcdcdc;
+            padding-left:18px;
+        }
+
+        .form-control:focus{
+            box-shadow:none;
+            border-color:#00c2a8;
+        }
+
+        .signup-btn{
+
+            width:100%;
+
+            height:55px;
+
+            background:#00c2a8;
+
+            border:none;
+
+            border-radius:12px;
+
+            color:white;
+
+            font-size:18px;
+
+            font-weight:600;
+
+            transition:0.3s;
+        }
+
+        .signup-btn:hover{
+            background:#009c88;
+        }
+
+        .extra-links{
+
+            margin-top:22px;
+
+            text-align:center;
+        }
+
+        .extra-links a{
+            text-decoration:none;
+            color:#00a896;
+            font-weight:500;
+        }
+
+        .extra-links a:hover{
+            text-decoration:underline;
+        }
+
+        .back-home{
+
+            position:absolute;
+            top:25px;
+            left:25px;
+        }
+
+        .back-home a{
+
+            color:white;
+
+            text-decoration:none;
+
+            background:rgba(255,255,255,0.15);
+
+            padding:10px 20px;
+
+            border-radius:30px;
+
+            backdrop-filter:blur(10px);
+        }
+
+        .terms{
+            font-size:14px;
+            color:#666;
+            margin-bottom:20px;
+        }
+
+        @media(max-width:500px){
+
+            .signup-container{
+                padding:30px;
+            }
+
+            .logo h1{
+                font-size:30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- BACK BUTTON -->
+
+    <div class="back-home">
+
+        <a href="index.html">
+            ← Back to Home
+        </a>
+
+    </div>
+
+    <!-- SIGNUP BOX -->
+
+    <div class="signup-container">
+
+        <div class="logo">
+
+            <h1>TRAVEL<span>LOOP</span></h1>
+
+            <p>Create your travel account</p>
+
+        </div>
+
+        <!-- SIGNUP FORM -->
+
+        <form id="signupForm">
+
+            <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                placeholder="Full Name"
+                required
+            >
+
+            <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Email Address"
+                required
+            >
+
+            <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+                required
+            >
+
+            <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                required
+            >
+
+            <div class="terms">
+
+                <input type="checkbox" required>
+
+                I agree to the Terms & Conditions
+
+            </div>
+
+            <button type="submit" class="signup-btn">
+                Create Account
+            </button>
+
+        </form>
+
+        <!-- EXTRA LINKS -->
+
+        <div class="extra-links">
+
+            <p>
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const signupForm = document.getElementById("signupForm");
+
+        signupForm.addEventListener("submit", function(e){
+
+            e.preventDefault();
+
+            const password =
+                document.getElementById("password").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if(password !== confirmPassword){
+
+                alert("Passwords do not match!");
+
+                return;
+
+            }
+
+            alert("Account created successfully!");
+
+            window.location.href = "dashboard.html";
+
+        });
+
+    </script>
+    
+
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>
+
+</body>
+</html>

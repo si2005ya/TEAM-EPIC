@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveloop Itinerary</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#f4f8fb;
+        }
+
+        .sidebar{
+            min-height:100vh;
+            background:#071739;
+            color:white;
+            padding:25px 20px;
+            position:fixed;
+            width:250px;
+        }
+
+        .logo{
+            font-size:28px;
+            font-weight:700;
+            margin-bottom:40px;
+        }
+
+        .logo span{
+            color:#00c2a8;
+        }
+
+        .menu a{
+            display:block;
+            color:white;
+            text-decoration:none;
+            padding:13px 15px;
+            border-radius:12px;
+            margin-bottom:12px;
+            transition:0.3s;
+        }
+
+        .menu a:hover,
+        .menu .active{
+            background:#00c2a8;
+        }
+
+        .main-content{
+            margin-left:250px;
+            padding:35px;
+        }
+
+        .top-card{
+            background:linear-gradient(135deg,#071739,#00a896);
+            color:white;
+            padding:35px;
+            border-radius:25px;
+            margin-bottom:30px;
+        }
+
+        .top-card h1{
+            font-weight:700;
+        }
+
+        .form-card,
+        .timeline-card{
+            background:white;
+            border-radius:22px;
+            padding:25px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom:25px;
+        }
+
+        .form-control,
+        .form-select{
+            height:52px;
+            border-radius:12px;
+        }
+
+        textarea.form-control{
+            height:100px;
+        }
+
+        .btn-main{
+            background:#00c2a8;
+            color:white;
+            border:none;
+            padding:12px 25px;
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        .btn-main:hover{
+            background:#009c88;
+            color:white;
+        }
+
+        .timeline{
+            position:relative;
+            padding-left:30px;
+        }
+
+        .timeline::before{
+            content:"";
+            position:absolute;
+            left:8px;
+            top:0;
+            width:4px;
+            height:100%;
+            background:#00c2a8;
+            border-radius:10px;
+        }
+
+        .timeline-item{
+            position:relative;
+            background:#f8fbff;
+            border-radius:18px;
+            padding:20px;
+            margin-bottom:20px;
+            border-left:5px solid #00c2a8;
+        }
+
+        .timeline-item::before{
+            content:"";
+            position:absolute;
+            left:-36px;
+            top:25px;
+            width:18px;
+            height:18px;
+            background:#071739;
+            border:4px solid #00c2a8;
+            border-radius:50%;
+        }
+
+        .city-title{
+            color:#071739;
+            font-weight:700;
+        }
+
+        .activity-box{
+            background:white;
+            border-radius:12px;
+            padding:12px 15px;
+            margin-top:12px;
+            border:1px solid #e4e4e4;
+        }
+
+        .cost-badge{
+            background:#ffc857;
+            color:#071739;
+            padding:6px 12px;
+            border-radius:20px;
+            font-weight:600;
+            font-size:14px;
+        }
+
+        @media(max-width:768px){
+            .sidebar{
+                position:relative;
+                width:100%;
+                min-height:auto;
+            }
+
+            .main-content{
+                margin-left:0;
+                padding:20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">TRAVEL<span>LOOP</span></div>
+
+        <div class="menu">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="create-trip.html">Create Trip</a>
+            <a href="itinerary.html" class="active">Itinerary</a>
+            <a href="budget.html">Budget</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="top-card">
+            <h1>Itinerary Builder</h1>
+            <p class="mb-0">Add cities, activities, dates and costs to create your perfect travel plan.</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-5">
+
+                <div class="form-card">
+                    <h4 class="mb-4">Add City Stop</h4>
+
+                    <form id="cityForm">
+                        <input type="text" id="cityName" class="form-control mb-3" placeholder="City Name e.g. Goa" required>
+
+                        <input type="date" id="cityStartDate" class="form-control mb-3" required>
+
+                        <input type="date" id="cityEndDate" class="form-control mb-3" required>
+
+                        <button type="submit" class="btn-main w-100">
+                            Add Stop
+                        </button>
+                    </form>
+                </div>
+
+                <div class="form-card">
+                    <h4 class="mb-4">Add Activity</h4>
+
+                    <form id="activityForm">
+                        <select id="activityCity" class="form-select mb-3" required>
+                            <option value="">Select City</option>
+                        </select>
+
+                        <input type="text" id="activityName" class="form-control mb-3" placeholder="Activity Name e.g. Beach Visit" required>
+
+                        <input type="time" id="activityTime" class="form-control mb-3" required>
+
+                        <input type="number" id="activityCost" class="form-control mb-3" placeholder="Cost ₹" required>
+
+                        <select id="activityType" class="form-select mb-3">
+                            <option value="Sightseeing">Sightseeing</option>
+                            <option value="Food">Food</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Transport">Transport</option>
+                        </select>
+
+                        <button type="submit" class="btn-main w-100">
+                            Add Activity
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="col-lg-7">
+
+                <div class="timeline-card">
+                    <h4 class="mb-4">Your Trip Timeline</h4>
+
+                    <div id="timeline" class="timeline">
+                        <p class="text-muted">No stops added yet. Start by adding a city.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let stops = [];
+        let selectedTripId = localStorage.getItem("selectedTripId");
+
+        const cityForm = document.getElementById("cityForm");
+        const activityForm = document.getElementById("activityForm");
+        const timeline = document.getElementById("timeline");
+        const activityCity = document.getElementById("activityCity");
+
+        // Load existing data if trip is selected
+        function loadTripData() {
+            if (selectedTripId) {
+                const trips = JSON.parse(localStorage.getItem("trips")) || [];
+                const trip = trips.find(t => t.id === selectedTripId);
+                if (trip && trip.activities) {
+                    // Convert activities back to stops format for display
+                    stops = convertActivitiesToStops(trip.activities);
+                    updateCityDropdown();
+                    renderTimeline();
+                }
+            }
+        }
+
+        function convertActivitiesToStops(activities) {
+            const stopsMap = {};
+            activities.forEach(activity => {
+                const city = activity.city || 'Unknown City';
+                if (!stopsMap[city]) {
+                    stopsMap[city] = {
+                        name: city,
+                        startDate: activity.date || '',
+                        endDate: activity.date || '',
+                        activities: []
+                    };
+                }
+                stopsMap[city].activities.push({
+                    name: activity.activityName,
+                    time: activity.time || '09:00',
+                    cost: activity.cost || 0,
+                    type: activity.category || 'Sightseeing'
+                });
+            });
+            return Object.values(stopsMap);
+        }
+
+        function saveActivitiesToTrip() {
+            if (!selectedTripId) return;
+
+            const trips = JSON.parse(localStorage.getItem("trips")) || [];
+            const tripIndex = trips.findIndex(t => t.id === selectedTripId);
+            
+            if (tripIndex !== -1) {
+                // Convert stops back to activities format
+                const activities = [];
+                stops.forEach(stop => {
+                    stop.activities.forEach(activity => {
+                        activities.push({
+                            city: stop.name,
+                            date: stop.startDate,
+                            time: activity.time,
+                            activityName: activity.name,
+                            category: activity.type,
+                            cost: activity.cost
+                        });
+                    });
+                });
+                
+                trips[tripIndex].activities = activities;
+                localStorage.setItem("trips", JSON.stringify(trips));
+            }
+        }
+
+        cityForm.addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const city = {
+                name: document.getElementById("cityName").value,
+                startDate: document.getElementById("cityStartDate").value,
+                endDate: document.getElementById("cityEndDate").value,
+                activities: []
+            };
+
+            stops.push(city);
+
+            cityForm.reset();
+            updateCityDropdown();
+            renderTimeline();
+            saveActivitiesToTrip();
+        });
+
+        activityForm.addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const cityIndex = activityCity.value;
+
+            const activity = {
+                name: document.getElementById("activityName").value,
+                time: document.getElementById("activityTime").value,
+                cost: document.getElementById("activityCost").value,
+                type: document.getElementById("activityType").value
+            };
+
+            stops[cityIndex].activities.push(activity);
+
+            activityForm.reset();
+            updateCityDropdown();
+            renderTimeline();
+            saveActivitiesToTrip();
+        });
+
+        function updateCityDropdown(){
+            activityCity.innerHTML = `<option value="">Select City</option>`;
+
+            stops.forEach((stop, index) => {
+                activityCity.innerHTML += `
+                    <option value="${index}">${stop.name}</option>
+                `;
+            });
+        }
+
+        function renderTimeline(){
+            timeline.innerHTML = "";
+
+            if(stops.length === 0){
+                timeline.innerHTML = `<p class="text-muted">No stops added yet. Start by adding a city.</p>`;
+                return;
+            }
+
+            let totalCost = 0;
+
+            stops.forEach((stop, index) => {
+                let activitiesHTML = "";
+
+                if(stop.activities.length === 0){
+                    activitiesHTML = `<p class="text-muted mt-2">No activities added yet.</p>`;
+                } else {
+                    stop.activities.forEach(activity => {
+                        totalCost += parseInt(activity.cost) || 0;
+                        activitiesHTML += `
+                            <div class="activity-box">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>${activity.name}</strong>
+                                        <p class="mb-0 text-muted">${activity.type} • ${activity.time}</p>
+                                    </div>
+                                    <span class="cost-badge">₹${activity.cost}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                timeline.innerHTML += `
+                    <div class="timeline-item">
+                        <h5 class="city-title">${index + 1}. ${stop.name}</h5>
+                        <p class="text-muted mb-2">${stop.startDate} to ${stop.endDate}</p>
+                        ${activitiesHTML}
+                    </div>
+                `;
+            });
+
+            // Add total cost summary
+            if (totalCost > 0) {
+                timeline.innerHTML += `
+                    <div class="alert alert-info mt-4">
+                        <h5><i class="fas fa-calculator me-2"></i>Total Activity Cost: ₹${totalCost}</h5>
+                        <p class="mb-0">This amount will be added to your trip budget calculations.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load data when page loads
+        loadTripData();
+
+        // Auto-save every 30 seconds
+        setInterval(saveActivitiesToTrip, 30000);
+    </script>
+
+</body>
+</html>

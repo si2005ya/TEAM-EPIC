@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trip Notes - Traveloop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#f4f8fb;
+    }
+
+    .sidebar{
+      min-height:100vh;
+      width:250px;
+      background:#071739;
+      color:white;
+      position:fixed;
+      padding:25px 20px;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:700;
+      margin-bottom:40px;
+    }
+
+    .logo span{
+      color:#00c2a8;
+    }
+
+    .menu a{
+      display:block;
+      color:white;
+      text-decoration:none;
+      padding:13px 15px;
+      border-radius:12px;
+      margin-bottom:12px;
+      transition:0.3s;
+    }
+
+    .menu a:hover,
+    .menu .active{
+      background:#00c2a8;
+    }
+
+    .main-content{
+      margin-left:250px;
+      padding:35px;
+    }
+
+    .top-card{
+      background:
+      linear-gradient(rgba(7,23,57,0.75), rgba(0,168,150,0.55)),
+      url('https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?q=80&w=1600&auto=format&fit=crop');
+
+      background-size:cover;
+      background-position:center;
+
+      color:white;
+
+      padding:42px;
+
+      border-radius:28px;
+
+      margin-bottom:30px;
+
+      box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .top-card h1{
+      font-size:42px;
+      font-weight:700;
+    }
+
+    .notes-card,
+    .journal-card{
+      background:white;
+      border-radius:25px;
+      padding:30px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+      height:100%;
+    }
+
+    .form-control,
+    .form-select{
+      border-radius:12px;
+    }
+
+    .form-control{
+      min-height:52px;
+    }
+
+    textarea.form-control{
+      height:140px;
+      resize:none;
+    }
+
+    .form-control:focus,
+    .form-select:focus{
+      box-shadow:none;
+      border-color:#00c2a8;
+    }
+
+    .btn-main{
+      background:#00c2a8;
+      color:white;
+      border:none;
+      padding:13px 28px;
+      border-radius:30px;
+      font-weight:600;
+      transition:0.3s;
+    }
+
+    .btn-main:hover{
+      background:#009c88;
+      color:white;
+    }
+
+    .note-item{
+      background:#f8fbff;
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:20px;
+      border-left:5px solid #00c2a8;
+    }
+
+    .note-title{
+      color:#071739;
+      font-weight:700;
+    }
+
+    .note-meta{
+      font-size:14px;
+      color:#777;
+      margin-bottom:12px;
+    }
+
+    .delete-btn{
+      background:#ff4d4d;
+      color:white;
+      border:none;
+      border-radius:10px;
+      padding:8px 15px;
+      font-size:14px;
+    }
+
+    .delete-btn:hover{
+      background:#e63939;
+    }
+
+    .empty-text{
+      color:#777;
+    }
+
+    @media(max-width:768px){
+
+      .sidebar{
+        position:relative;
+        width:100%;
+        min-height:auto;
+      }
+
+      .main-content{
+        margin-left:0;
+        padding:20px;
+      }
+
+      .top-card h1{
+        font-size:32px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+
+    <div class="logo">
+      TRAVEL<span>LOOP</span>
+    </div>
+
+    <div class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="create-trip.html">Create Trip</a>
+      <a href="itinerary.html">Itinerary</a>
+      <a href="budget.html">Budget</a>
+      <a href="checklist.html">Checklist</a>
+      <a href="notes.html" class="active">Notes</a>
+      <a href="profile.html">Profile</a>
+      <a href="index.html">Logout</a>
+    </div>
+
+  </div>
+
+  <div class="main-content">
+
+    <div class="top-card">
+
+      <h1>Trip Notes & Journal</h1>
+
+      <p class="mb-0">
+        Save reminders, travel memories, hotel details and important notes for your journey.
+      </p>
+
+    </div>
+
+    <div class="row g-4">
+
+      <!-- NOTE FORM -->
+
+      <div class="col-lg-5">
+
+        <div class="notes-card">
+
+          <h4 class="mb-4">Add Travel Note</h4>
+
+          <form id="noteForm">
+
+            <div class="mb-3">
+
+              <label class="mb-2">Trip Name</label>
+
+              <input
+                type="text"
+                id="tripName"
+                class="form-control"
+                placeholder="Example: Goa Vacation"
+                required
+              >
+
+            </div>
+
+            <div class="mb-3">
+
+              <label class="mb-2">Note Title</label>
+
+              <input
+                type="text"
+                id="noteTitle"
+                class="form-control"
+                placeholder="Example: Hotel Check-in"
+                required
+              >
+
+            </div>
+
+            <div class="mb-4">
+
+              <label class="mb-2">Write Your Note</label>
+
+              <textarea
+                id="noteText"
+                class="form-control"
+                placeholder="Write your travel notes here..."
+                required
+              ></textarea>
+
+            </div>
+
+            <button type="submit" class="btn-main w-100">
+              Save Note
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- NOTES LIST -->
+
+      <div class="col-lg-7">
+
+        <div class="journal-card">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h4>Your Travel Journal</h4>
+
+            <span class="text-muted" id="noteCount">
+              0 Notes
+            </span>
+
+          </div>
+
+          <div id="notesContainer">
+
+            <p class="empty-text">
+              No travel notes added yet.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let notes = [];
+    let selectedTripId = localStorage.getItem("selectedTripId");
+
+    const noteForm = document.getElementById("noteForm");
+    const notesContainer = document.getElementById("notesContainer");
+    const noteCount = document.getElementById("noteCount");
+    const tripNameInput = document.getElementById("tripName");
+
+    // Load existing data if trip is selected
+    function loadTripData() {
+        if (selectedTripId) {
+            const trips = JSON.parse(localStorage.getItem("trips")) || [];
+            const trip = trips.find(t => t.id === selectedTripId);
+            if (trip) {
+                // Auto-fill trip name
+                tripNameInput.value = trip.name;
+                tripNameInput.readOnly = true;
+                
+                // Load existing notes
+                if (trip.notes) {
+                    notes = trip.notes;
+                    renderNotes();
+                }
+            }
+        }
+    }
+
+    function saveNotesToTrip() {
+        if (!selectedTripId) return;
+
+        const trips = JSON.parse(localStorage.getItem("trips")) || [];
+        const tripIndex = trips.findIndex(t => t.id === selectedTripId);
+        
+        if (tripIndex !== -1) {
+            trips[tripIndex].notes = notes;
+            localStorage.setItem("trips", JSON.stringify(trips));
+        }
+    }
+
+    noteForm.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        const tripName = document.getElementById("tripName").value;
+        const noteTitle = document.getElementById("noteTitle").value;
+        const noteText = document.getElementById("noteText").value;
+
+        const note = {
+            title: noteTitle,
+            text: noteText,
+            createdAt: new Date().toISOString(),
+            tripName: tripName
+        };
+
+        notes.unshift(note);
+
+        noteForm.reset();
+        
+        // Re-fill trip name if it was auto-filled
+        if (selectedTripId) {
+            const trips = JSON.parse(localStorage.getItem("trips")) || [];
+            const trip = trips.find(t => t.id === selectedTripId);
+            if (trip) {
+                tripNameInput.value = trip.name;
+            }
+        }
+
+        renderNotes();
+        saveNotesToTrip();
+    });
+
+    function renderNotes(){
+        notesContainer.innerHTML = "";
+        noteCount.textContent = `${notes.length} Notes`;
+
+        if(notes.length === 0){
+            notesContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-sticky-note fa-3x text-muted mb-3"></i>
+                    <p class="empty-text">No travel notes added yet.</p>
+                    <p class="text-muted small">Start adding notes to remember important details about your trip!</p>
+                </div>
+            `;
+            return;
+        }
+
+        notes.forEach((note, index) => {
+            const createdDate = new Date(note.createdAt).toLocaleString();
+            
+            notesContainer.innerHTML += `
+                <div class="note-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="note-title">${note.title}</h5>
+                            <div class="note-meta">
+                                <i class="fas fa-calendar-alt me-1"></i>${createdDate}
+                                ${note.tripName ? `• <i class="fas fa-suitcase me-1"></i>${note.tripName}` : ''}
+                            </div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteNote(${index})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                    <p class="mb-0 mt-3">${note.text}</p>
+                </div>
+            `;
+        });
+    }
+
+    function deleteNote(index){
+        if (confirm("Are you sure you want to delete this note?")) {
+            notes.splice(index, 1);
+            renderNotes();
+            saveNotesToTrip();
+        }
+    }
+
+    // Load data when page loads
+    loadTripData();
+
+    // Auto-save every 30 seconds
+    setInterval(saveNotesToTrip, 30000);
+
+    // Save before page unload
+    window.addEventListener('beforeunload', saveNotesToTrip);
+  </script>
+
+</body>
+</html>
